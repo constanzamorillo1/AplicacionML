@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Aplicacion-ML</string>
+    <string name="buscar_holder">Buscar producto</string>
+    <string name="buscar">Buscar</string>
+</resources>
