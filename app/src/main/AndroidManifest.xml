@@ -23,7 +23,7 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".DetalleItem"
-            android:parentActivityName=".Visualizacion"></activity>
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>
