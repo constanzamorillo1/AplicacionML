@@ -7,6 +7,7 @@ import android.support.constraint.Constraints;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +39,7 @@ public class Visualizacion extends AppCompatActivity {
     }
 
     protected void cargarItems(String item){
-        final LinearLayout botones = (LinearLayout) findViewById(R.id.botones);
+        final LinearLayout botones = findViewById(R.id.botones);
         final Context context = this;
         String URL = "https://api.mercadolibre.com/sites/MLU/search?q="+item;
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -52,14 +53,11 @@ public class Visualizacion extends AppCompatActivity {
                             for(int i = 0; i<obj.length(); i++) {
                                 final JSONObject it = obj.getJSONObject(i);
                                 Button boton = new Button(context);
-                                final String precio = it.getString("price");
                                 boton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                                 boton.setText(it.getString("title"));
-                                boton.setTextSize(10);
                                 boton.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v) {
                                         Intent intent = new Intent(context,DetalleItem.class);
-                                        intent.putExtra("precio",precio);
                                         intent.putExtra("item",it.toString());
                                         startActivity(intent);
                                     }

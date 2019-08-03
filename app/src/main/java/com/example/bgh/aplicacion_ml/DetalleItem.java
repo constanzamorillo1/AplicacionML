@@ -17,11 +17,17 @@ public class DetalleItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_item);
+
+        visualizar_detalle();
+    }
+
+    protected void visualizar_detalle(){
         Intent intent = getIntent();
         String item = intent.getStringExtra("item");
         JsonObject objeto = new Gson().fromJson(item, JsonObject.class);
         TextView datos = findViewById(R.id.datos);
-        /*Se genera el string con datos del producto*/
+
+        /*Se genera el string con datos del producto. Luego se coloca en el componente Text*/
         String acepta_mercado = objeto.get("accepts_mercadopago").getAsBoolean() ? "SI" : "NO";
         String cantidad_disponible = objeto.get("available_quantity").getAsInt() == 0 ? "NO HAY DISPONIBILIDAD" : "Cantidad Disponible: "+objeto.get("available_quantity").getAsInt();
         String string_datos = objeto.get("title").getAsString()+"\n";
@@ -31,6 +37,7 @@ public class DetalleItem extends AppCompatActivity {
         string_datos+= "Cantidad vendida: "+objeto.get("sold_quantity").getAsString();
         datos.setText(string_datos);
 
+        /*Se obtiene la url de la imagen del producto. Se obtiene el componente Image y con la dependencia Picasso se carga la imagen desde la url*/
         String imageUrl = objeto.get("thumbnail").getAsString();
         ImageView im = findViewById(R.id.imagen);
         Picasso.get().load(imageUrl).placeholder(R.drawable.ic_launcher_background).into(im);
