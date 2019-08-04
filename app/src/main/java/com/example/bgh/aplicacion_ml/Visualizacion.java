@@ -82,7 +82,9 @@ public class Visualizacion extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("error",error.toString());
+                    Intent intent = new Intent(context,MainActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(context,"Ha ocurrido un error en la búsqueda. Compruebe su conexión a Internet y vuelva a intentar",Toast.LENGTH_LONG).show();
                 }
             }
         );
