@@ -59,6 +59,8 @@ public class Visualizacion extends AppCompatActivity {
                                     Button boton = new Button(context);
                                     boton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
                                     boton.setText(it.getString("title"));
+
+                                    /*Se pasa en el intent el objeto json convertido a string para usarlo en la visualización del detalle*/
                                     boton.setOnClickListener(new View.OnClickListener() {
                                         public void onClick(View v) {
                                             Intent intent = new Intent(context,DetalleItem.class);
