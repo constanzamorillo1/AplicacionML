@@ -37,7 +37,7 @@ public class DetalleItem extends AppCompatActivity {
         string_datos+= "Cantidad vendida: "+objeto.get("sold_quantity").getAsString();
         datos.setText(string_datos);
 
-        /*Se obtiene la url de la imagen del producto. Se obtiene el componente Image y con la dependencia Picasso se carga la imagen desde la url*/
+        /*Se obtiene la url de la imagen del producto. Se obtiene el componente Image y con la libreria Picasso se carga la imagen desde la url*/
         String imageUrl = objeto.get("thumbnail").getAsString();
         ImageView im = findViewById(R.id.imagen);
         Picasso.get().load(imageUrl).placeholder(R.drawable.ic_launcher_background).into(im);

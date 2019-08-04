@@ -2,18 +2,13 @@ package com.example.bgh.aplicacion_ml;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.Constraints;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,6 +33,14 @@ public class Visualizacion extends AppCompatActivity {
         cargarItems(item);
     }
 
+    /**
+     *
+     * @param item, artículo abuscar
+     * Se utiliza la libreria volley para realizar el requerimiento a la api ,
+     * y así obtener los artículos relacionados con la búsqueda
+     *  Para cada artículo se crea un botón con el nombre del mismo.
+     *  Cuando se clickea, se dirige a la visualización detallada.
+     */
     protected void cargarItems(String item){
         final LinearLayout botones = findViewById(R.id.botones);
         final Context context = this;
@@ -50,19 +53,25 @@ public class Visualizacion extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray obj = response.getJSONArray("results");
-                            for(int i = 0; i<obj.length(); i++) {
-                                final JSONObject it = obj.getJSONObject(i);
-                                Button boton = new Button(context);
-                                boton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-                                boton.setText(it.getString("title"));
-                                boton.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(context,DetalleItem.class);
-                                        intent.putExtra("item",it.toString());
-                                        startActivity(intent);
-                                    }
-                                });
-                                botones.addView(boton);
+                            if (obj.length()>0){
+                                for(int i = 0; i<obj.length(); i++) {
+                                    final JSONObject it = obj.getJSONObject(i);
+                                    Button boton = new Button(context);
+                                    boton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+                                    boton.setText(it.getString("title"));
+                                    boton.setOnClickListener(new View.OnClickListener() {
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(context,DetalleItem.class);
+                                            intent.putExtra("item",it.toString());
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    botones.addView(boton);
+                                }
+                            }else {
+                                Intent intent = new Intent(context,MainActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(context,"No se han encontrado datos relacionados a la búsqueda. Vuelva a intentar",Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
